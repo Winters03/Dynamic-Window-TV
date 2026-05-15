@@ -8,9 +8,9 @@ set(CMAKE_DEPENDS_LANGUAGES
 
 # The set of dependency files which are needed:
 set(CMAKE_DEPENDS_DEPENDENCY_FILES
-  "/Users/samuelpardoe/Downloads/WindowC++/src/functions.cpp" "CMakeFiles/my_app.dir/src/functions.cpp.o" "gcc" "CMakeFiles/my_app.dir/src/functions.cpp.o.d"
-  "/Users/samuelpardoe/Downloads/WindowC++/src/headtracking.cpp" "CMakeFiles/my_app.dir/src/headtracking.cpp.o" "gcc" "CMakeFiles/my_app.dir/src/headtracking.cpp.o.d"
-  "/Users/samuelpardoe/Downloads/WindowC++/src/main.cpp" "CMakeFiles/my_app.dir/src/main.cpp.o" "gcc" "CMakeFiles/my_app.dir/src/main.cpp.o.d"
+  "/Users/samuelpardoe/Downloads/WindowC++/Dynamic-Window-TV/src/functions.cpp" "CMakeFiles/my_app.dir/src/functions.cpp.o" "gcc" "CMakeFiles/my_app.dir/src/functions.cpp.o.d"
+  "/Users/samuelpardoe/Downloads/WindowC++/Dynamic-Window-TV/src/headtracking.cpp" "CMakeFiles/my_app.dir/src/headtracking.cpp.o" "gcc" "CMakeFiles/my_app.dir/src/headtracking.cpp.o.d"
+  "/Users/samuelpardoe/Downloads/WindowC++/Dynamic-Window-TV/src/main.cpp" "CMakeFiles/my_app.dir/src/main.cpp.o" "gcc" "CMakeFiles/my_app.dir/src/main.cpp.o.d"
   )
 
 # Targets to which this target links which contain Fortran sources.

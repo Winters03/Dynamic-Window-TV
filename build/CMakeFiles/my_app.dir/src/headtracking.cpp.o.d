@@ -1,5 +1,5 @@
 CMakeFiles/my_app.dir/src/headtracking.cpp.o: \
-  /Users/samuelpardoe/Downloads/WindowC++/src/headtracking.cpp \
+  /Users/samuelpardoe/Downloads/WindowC++/Dynamic-Window-TV/src/headtracking.cpp \
   /opt/homebrew/Cellar/opencv/4.13.0_10/include/opencv4/opencv2/opencv.hpp \
   /opt/homebrew/Cellar/opencv/4.13.0_10/include/opencv4/opencv2/opencv_modules.hpp \
   /opt/homebrew/Cellar/opencv/4.13.0_10/include/opencv4/opencv2/core.hpp \
@@ -947,4 +947,4 @@ CMakeFiles/my_app.dir/src/headtracking.cpp.o: \
   /opt/homebrew/Cellar/opencv/4.13.0_10/include/opencv4/opencv2/video.hpp \
   /opt/homebrew/Cellar/opencv/4.13.0_10/include/opencv4/opencv2/video/tracking.hpp \
   /opt/homebrew/Cellar/opencv/4.13.0_10/include/opencv4/opencv2/video/background_segm.hpp \
-  /Users/samuelpardoe/Downloads/WindowC++/src/variables.h
+  /Users/samuelpardoe/Downloads/WindowC++/Dynamic-Window-TV/src/variables.h

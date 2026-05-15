@@ -1,5 +1,5 @@
 CMakeFiles/my_app.dir/src/main.cpp.o: \
-  /Users/samuelpardoe/Downloads/WindowC++/src/main.cpp \
+  /Users/samuelpardoe/Downloads/WindowC++/Dynamic-Window-TV/src/main.cpp \
   /Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/usr/include/c++/v1/iostream \
   /Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/usr/include/c++/v1/__config \
   /Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/usr/include/c++/v1/__config_site \
@@ -947,7 +947,7 @@ CMakeFiles/my_app.dir/src/main.cpp.o: \
   /opt/homebrew/Cellar/opencv/4.13.0_10/include/opencv4/opencv2/video.hpp \
   /opt/homebrew/Cellar/opencv/4.13.0_10/include/opencv4/opencv2/video/tracking.hpp \
   /opt/homebrew/Cellar/opencv/4.13.0_10/include/opencv4/opencv2/video/background_segm.hpp \
-  /Users/samuelpardoe/Downloads/WindowC++/src/config.h \
-  /Users/samuelpardoe/Downloads/WindowC++/src/variables.h \
-  /Users/samuelpardoe/Downloads/WindowC++/src/functions.h \
-  /Users/samuelpardoe/Downloads/WindowC++/src/headtracking.h
+  /Users/samuelpardoe/Downloads/WindowC++/Dynamic-Window-TV/src/config.h \
+  /Users/samuelpardoe/Downloads/WindowC++/Dynamic-Window-TV/src/variables.h \
+  /Users/samuelpardoe/Downloads/WindowC++/Dynamic-Window-TV/src/functions.h \
+  /Users/samuelpardoe/Downloads/WindowC++/Dynamic-Window-TV/src/headtracking.h

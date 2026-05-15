@@ -1,6 +1,6 @@
 CMakeFiles/my_app.dir/src/functions.cpp.o: \
-  /Users/samuelpardoe/Downloads/WindowC++/src/functions.cpp \
-  /Users/samuelpardoe/Downloads/WindowC++/src/variables.h \
+  /Users/samuelpardoe/Downloads/WindowC++/Dynamic-Window-TV/src/functions.cpp \
+  /Users/samuelpardoe/Downloads/WindowC++/Dynamic-Window-TV/src/variables.h \
   /Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/usr/include/c++/v1/string \
   /Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/usr/include/c++/v1/__algorithm/max.h \
   /Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/usr/include/c++/v1/__algorithm/comp.h \
