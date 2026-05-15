@@ -1,0 +1,3 @@
+/Users/samuelpardoe/Downloads/WindowC++/build/CMakeFiles/my_app.dir
+/Users/samuelpardoe/Downloads/WindowC++/build/CMakeFiles/edit_cache.dir
+/Users/samuelpardoe/Downloads/WindowC++/build/CMakeFiles/rebuild_cache.dir
