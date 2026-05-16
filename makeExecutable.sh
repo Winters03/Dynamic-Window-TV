@@ -10,8 +10,8 @@ fi
 
 if [ "$1" = "Windows11" ]; then
     echo "Creating Windows Executable."
+    cmake ..
     cmake --build .
-    make
 elif [ "$1" = "MacOS" ]; then
     echo "Running MacOS Executable."
     cmake ..
