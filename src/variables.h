@@ -9,7 +9,7 @@ struct windowConfig {
     float gamma_Day;
     float gamma_TwilightNight;
     float gamma_TwilightDay;
-    float scale;
+    float scale = 1;
     float movementScale_X;
     float movementScale_Y;
 };
@@ -24,10 +24,10 @@ struct Window {
 };
 
 struct HeadLocations {
-    int X_Pixel_Target;
-    int Y_Pixel_Target;
-    int X_Pixel_Current;
-    int Y_Pixel_Current;
+    int X_Pixel_Target = 500;
+    int Y_Pixel_Target = 500;
+    int X_Pixel_Current = 500;
+    int Y_Pixel_Current = 500;
 };
 
 

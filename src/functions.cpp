@@ -100,7 +100,7 @@ vector<string> splitString(string STR, char dec) {
 }
 
 void getData(windowConfig& config) {
-    string file = "temprex";
+    string file = "waterfront";
 
     vector<vector<string>> catalog = catalogRead();
     vector<string> bgDATA;
@@ -119,12 +119,12 @@ void getData(windowConfig& config) {
     config.bgType = bgDATA[1];
 
     if (config.bgType != "mp4") {
-        config.gamma_Day = stof(bgDATA[4]);
-        config.gamma_TwilightNight = stof(splitString(bgDATA[5],'-')[0]);
-        config.gamma_TwilightDay = stof(splitString(bgDATA[5],'-')[1]);
+        config.gamma_Day = stof(bgDATA[3]);
+        config.gamma_TwilightNight = stof(splitString(bgDATA[4],'-')[0]);
+        config.gamma_TwilightDay = stof(splitString(bgDATA[4],'-')[1]);
     }
 
-    config.scale = stof(bgDATA[3]);
+    //config.scale = stof(bgDATA[3]);
     config.movementScale_X = stof(splitString(bgDATA[2],'-')[0]);
     config.movementScale_Y = stof(splitString(bgDATA[2],'-')[1]);
 
