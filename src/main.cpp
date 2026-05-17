@@ -37,7 +37,7 @@ int main() {
         "./models/res10_300x300_ssd_iter_140000.caffemodel"
     );
 
-    cv::VideoCapture video(0);
+    cv::VideoCapture video(1);
     video.set(cv::CAP_PROP_BUFFERSIZE, 1);
     video.set(cv::CAP_PROP_FRAME_WIDTH, 1280);
     video.set(cv::CAP_PROP_FRAME_HEIGHT, 720);
