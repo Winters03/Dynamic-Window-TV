@@ -22,11 +22,11 @@ int main() {
     cv::Mat camera;
     cv::Mat background_SOURCE;
     cv::Mat background;
-    cv::Mat cropped;
+    cv::Mat cropped = cv::Mat::zeros(1920, 1080, CV_8UC3);
+    cv::VideoCapture background_Video;
     HeadLocations headData;
     Window windowData;
     windowConfig config;
-    cv::VideoCapture background_Video;
 
     getData(config);
 
@@ -37,7 +37,7 @@ int main() {
         "./models/res10_300x300_ssd_iter_140000.caffemodel"
     );
 
-    cv::VideoCapture video(0, cv::CAP_AVFOUNDATION);
+    cv::VideoCapture video(0);
     video.set(cv::CAP_PROP_BUFFERSIZE, 1);
     video.set(cv::CAP_PROP_FRAME_WIDTH, 1280);
     video.set(cv::CAP_PROP_FRAME_HEIGHT, 720);
@@ -62,6 +62,9 @@ int main() {
 
     }
 
+    cv::namedWindow("Cropped", cv::WINDOW_NORMAL);
+    cv::setWindowProperty("Cropped", cv::WND_PROP_FULLSCREEN, cv::WINDOW_FULLSCREEN);
+
     auto start = std::chrono::high_resolution_clock::now();
     auto currentTime = std::chrono::high_resolution_clock::now();
     auto prevTime = start;
@@ -81,7 +84,7 @@ int main() {
         }
         
         getLocationOfHead(headData, camera, net);
-        Smoothing(headData, 0.75);
+        Smoothing(headData, 0.75, 0.75);
         getLocationOfCropped(windowData, headData, background.cols, background.rows, camera.cols, camera.rows, config.movementScale_X, config.movementScale_Y);
         setCropping(windowData, background.rows, background.cols, WindowDimensions_X, WindowDimensions_Y, config.scale);
 
@@ -109,7 +112,7 @@ int main() {
         if (cv::waitKey(1) == 'q') break;
 
         chrono::duration<double, std::milli> elapsed = currentTime - prevTime;
-        cout << 1000/elapsed.count() << endl;
+        //cout << 1000/elapsed.count() << endl;
         prevTime = currentTime;
     }
 

@@ -12,7 +12,7 @@ using std::vector;
 
 void getLocationOfCropped(Window& Window, HeadLocations& HeadLocations, int background_X, int background_Y, int camera_X, int camera_Y, float movementScale_X,float movementScale_Y) {
     Window.X_Location = (background_X/2) + ((HeadLocations.X_Pixel_Current - (camera_X/2))*movementScale_X);
-    Window.Y_Location = (background_Y/2) + ((HeadLocations.Y_Pixel_Current - (camera_Y/2))*movementScale_Y);
+    Window.Y_Location = (background_Y/2) - ((HeadLocations.Y_Pixel_Current - (camera_Y/2))*movementScale_Y);
 }
 
 
@@ -120,8 +120,8 @@ void getData(windowConfig& config) {
 
     if (config.bgType != "mp4") {
         config.gamma_Day = stof(bgDATA[3]);
-        config.gamma_TwilightNight = stof(splitString(bgDATA[4],'-')[0]);
-        config.gamma_TwilightDay = stof(splitString(bgDATA[4],'-')[1]);
+        config.gamma_TwilightNight = stof(bgDATA[4]);
+        config.gamma_TwilightDay = stof(bgDATA[5]);
     }
 
     //config.scale = stof(bgDATA[3]);

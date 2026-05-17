@@ -14,12 +14,12 @@ if [ "$1" = "Win32" ]; then
     cmake --build . --config Release
     cd ..
     cp ./build/Release/my_app.exe ./my_app.exe
+    ./my_app.exe
 elif [ "$1" = "MacOS" ]; then
     echo "Running MacOS Executable."
     cmake ..
     make
     cd ..
     cp ./build/my_app ./my_app
-    #echo $(pwd)
     ./my_app
 fi

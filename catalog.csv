@@ -1,4 +1,4 @@
-File Name,File Type,Movement Scale,Gamma (Daytime),Gamma (Lighting)
-waterfront,hdr,1.5-1.5,3.0,0.5-3
-misty_pines,hdr,1.5-1.5,3.0,0.5-3
-temprex,mp4,1.5-1.5,n/a,n/a
+File Name (0),File Type (1),Movement Scale (2),Gamma (Daytime) (3),Gamma (Twilight: Dark) (4),Gamma (Twilight: Light) (5)
+waterfront,hdr,1.5-1.5,3.0,0.5,3
+misty_pines,hdr,1.5-1.5,3.0,0.5,3
+temprex,mp4,1.5-1.5,n/a,n/a,n/a
