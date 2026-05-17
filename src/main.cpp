@@ -2,6 +2,8 @@
 #include <string>
 #include <opencv2/opencv.hpp>
 #include <opencv2/dnn.hpp>
+#include "opencv2/objdetect.hpp"
+#include <opencv2/tracking.hpp>
 //#include <opencv2/imgproc.hpp>
 //#include <opencv2/videoio.hpp>
 
@@ -38,11 +40,24 @@ int main() {
     );
 
     cv::VideoCapture video(1);
+    if (!video.isOpened()) {
+        cout << "External Webcam Not Connected." << endl << "Using Laptop Camera" << endl;
+        video.open(0);
+    }
+
     video.set(cv::CAP_PROP_BUFFERSIZE, 1);
-    video.set(cv::CAP_PROP_FRAME_WIDTH, 1280);
-    video.set(cv::CAP_PROP_FRAME_HEIGHT, 720);
+    video.set(cv::CAP_PROP_FRAME_WIDTH, 1920);
+    video.set(cv::CAP_PROP_FRAME_HEIGHT, 1080);
     //video.set(cv::CAP_PROP_FPS, 1);
-    //if (!video.isOpened()) return -1;
+    video.set(cv::CAP_PROP_AUTO_EXPOSURE, 1);
+    //video.set(cv::CAP_PROP_EXPOSURE, -50);
+    //video.set(cv::CAP_PROP_GAIN, -10);
+
+    cv::Ptr<cv::FaceDetectorYN> detector = cv::FaceDetectorYN::create(
+        "./models/face_detection_yunet_2023mar.onnx", "", cv::Size(video.get(cv::CAP_PROP_FRAME_WIDTH),video.get(cv::CAP_PROP_FRAME_HEIGHT))
+    );
+
+    cv::Ptr<cv::FaceDetectorYN> detector_2 = cv::FaceDetectorYN::create("./models/face_detection_yunet_2023mar.onnx", "", cv::Size(1920, 1080), 0.6f, 0.3f, 5000);
 
     if (config.bgType == "mp4") {
         background_Video.open("./backgrounds/"+config.bgName+".mp4");
@@ -83,8 +98,10 @@ int main() {
             background = background_SOURCE.clone();
         }
         
-        getLocationOfHead(headData, camera, net);
-        Smoothing(headData, 0.75, 0.75);
+        getLocationOfHead_res10(headData, camera, net);
+        //getLocationOfHead_YuNet(headData, camera, detector);
+        //getLocationOfHead_YuNet_2(headData, camera, detector_2);
+        Smoothing(headData, 0.4, 0.5);
         getLocationOfCropped(windowData, headData, background.cols, background.rows, camera.cols, camera.rows, config.movementScale_X, config.movementScale_Y);
         setCropping(windowData, background.rows, background.cols, WindowDimensions_X, WindowDimensions_Y, config.scale);
 
@@ -105,7 +122,7 @@ int main() {
         cv::rectangle(background, {windowData.LX, windowData.TY}, {windowData.RX,windowData.BY}, {255, 0, 0}, 6, -1);
 
 
-        //cv::imshow("Head Tracking", camera);
+        cv::imshow("Head Tracking", camera);
         //cv::imshow("Background", background);
         cv::imshow("Cropped", cropped);
 
