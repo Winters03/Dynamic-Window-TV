@@ -2,25 +2,11 @@
 #include <opencv2/dnn.hpp>
 #include <opencv2/objdetect.hpp>
 #include <opencv2/tracking.hpp>
+#include <opencv2/tracking/tracking_legacy.hpp>
 #include "variables.h"
 
 #include <iostream>
 using namespace std;
-
-
-void applyGammaCorrection(cv::Mat& frame, double gamma) {
-    // Create a lookup table for speed (doing math on 256 values instead of every pixel)
-    cv::Mat lookUpTable(1, 256, CV_8U);
-    uchar* p = lookUpTable.ptr();
-    
-    for (int i = 0; i < 256; ++i) {
-        // Formula: ((Old_Pixel / 255) ^ gamma) * 255
-        p[i] = cv::saturate_cast<uchar>(std::pow(i / 255.0, gamma) * 255.0);
-    }
-    
-    // Instantly map the entire frame to the new glare-reduced curve
-    cv::LUT(frame, lookUpTable, frame);
-}
 
 void normalizeLighting(cv::Mat& frame) {
     cv::Mat lab_image;
@@ -47,7 +33,7 @@ void normalizeLighting(cv::Mat& frame) {
 }
 
 
-void getLocationOfHead_res10(HeadLocations& headData, cv::Mat& frame, cv::dnn::Net& net) {
+void getLocationOfHead(HeadLocations& headData,cv::HOGDescriptor& hog, cv::Mat& frame, cv::dnn::Net& net) {
 
     normalizeLighting(frame);
 
@@ -87,78 +73,34 @@ void getLocationOfHead_res10(HeadLocations& headData, cv::Mat& frame, cv::dnn::N
             headData.Y_Pixel_Target = (y1 + y2) / 2;
         }
     }
-    cv::putText(frame, "Confidence: " + std::to_string(confid), cv::Point(50, 50), cv::FONT_HERSHEY_SIMPLEX, 0.5, (0,255,0), 1, cv::LINE_AA);
-}
 
-void getLocationOfHead_YuNet(HeadLocations& headData, cv::Mat& frame, cv::Ptr<cv::FaceDetectorYN>& net) {
-    
-    //applyGammaCorrection(frame, 2.0); // Adjust gamma to reduce glare
+    std::vector<cv::Rect> found;
+    // Resize or downscale frame here if detection is slow
+    hog.detectMultiScale(frame, found, 0, cv::Size(8,8), cv::Size(32,32), 1.05, 2);
 
-    normalizeLighting(frame);
-
-    float highest_confidence = 0;
-    
-    cv::Mat faces;
-    net->detect(frame, faces);
-
-    // Loop through detections
-    for (int i = 0; i < faces.rows; i++) {
-        float confidence = faces.at<float>(i, 14); // Confidence is at index 14
-
-
-
-        if (confidence > highest_confidence) {
-            highest_confidence = confidence;
-        }
-
-        if (confidence > 0.6) {
-            float x = faces.at<float>(i, 0);
-            float y = faces.at<float>(i, 1);
-            float w = faces.at<float>(i, 2);
-            float h = faces.at<float>(i, 3);
-            
-            // Calculate center pixel target
-            headData.X_Pixel_Target = x + (w / 2);
-            headData.Y_Pixel_Target = y + (h / 2);
-        }
+    if (found.empty()) {
+        return;
     }
 
-    cv::putText(frame, "Confidence: " + std::to_string(highest_confidence), cv::Point(50, 50), cv::FONT_HERSHEY_SIMPLEX, 0.5, (0,255,0), 1, cv::LINE_AA);
-}
+    cv::Rect roi = found[0];
 
-void getLocationOfHead_YuNet_2(HeadLocations& headData, cv::Mat& frame, cv::Ptr<cv::FaceDetectorYN> net) {
-    cv::Mat faces;
+    // 3. Create the ultra-fast MOSSE tracker
+    cv::Ptr<cv::Tracker> tracker = cv::legacy::upgradeTrackingAPI(cv::legacy::TrackerMOSSE::create());
+    tracker->init(frame, roi);
 
-    cv::Ptr<cv::TrackerCSRT> tracker;
-    bool tracking = false;
+    bool success = tracker->update(frame, roi);
 
-    cv::Rect trackedFace;
-    net->setInputSize(frame.size());
-
-    net->detect(frame, faces);
-    //cout << faces << endl;
-
-    if (faces.rows > 0) {
-        float* data = faces.ptr<float>(0);
-
-        trackedFace = cv::Rect(
-            int(data[0]),
-            int(data[1]),
-            int(data[2]),
-            int(data[3])
-        );
-
-        tracker = cv::TrackerCSRT::create();
-        tracker->init(frame, trackedFace);
-        tracking = true;
-    }
-    if (tracking == true) {
-
-        headData.X_Pixel_Target = trackedFace.x + (trackedFace.width / 2);
-        headData.Y_Pixel_Target = trackedFace.y + (trackedFace.height / 2);
+    cv::putText(frame, "Face Confidence  : " + std::to_string(confid), cv::Point(50, 50), cv::FONT_HERSHEY_SIMPLEX, 0.5, (0,255,0), 1, cv::LINE_AA);
+    cv::putText(frame, "Person Confidence: " + std::to_string(confid), cv::Point(50, 100), cv::FONT_HERSHEY_SIMPLEX, 0.5, (0,255,0), 1, cv::LINE_AA);
+    if (success) {
+        headData.X_Pixel_Target = roi.x + roi.width / 2;
+        headData.Y_Pixel_Target = roi.y + roi.height / 2;
+        cv::rectangle(frame, roi, cv::Scalar(0, 255, 0), 2);
     }
 
+
 }
+
 
 void Smoothing(HeadLocations& headData, float smoothing_X, float smoothing_Y) {
 

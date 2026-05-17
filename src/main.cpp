@@ -38,6 +38,8 @@ int main() {
         "./models/deploy.prototxt",
         "./models/res10_300x300_ssd_iter_140000.caffemodel"
     );
+    cv::HOGDescriptor hog;
+    hog.setSVMDetector(cv::HOGDescriptor::getDefaultPeopleDetector());
 
     cv::VideoCapture video(1);
     if (!video.isOpened()) {
@@ -53,11 +55,11 @@ int main() {
     //video.set(cv::CAP_PROP_EXPOSURE, -50);
     //video.set(cv::CAP_PROP_GAIN, -10);
 
-    cv::Ptr<cv::FaceDetectorYN> detector = cv::FaceDetectorYN::create(
-        "./models/face_detection_yunet_2023mar.onnx", "", cv::Size(video.get(cv::CAP_PROP_FRAME_WIDTH),video.get(cv::CAP_PROP_FRAME_HEIGHT))
-    );
+    //cv::Ptr<cv::FaceDetectorYN> detector = cv::FaceDetectorYN::create(
+    //    "./models/face_detection_yunet_2023mar.onnx", "", cv::Size(video.get(cv::CAP_PROP_FRAME_WIDTH),video.get(cv::CAP_PROP_FRAME_HEIGHT))
+    //);
 
-    cv::Ptr<cv::FaceDetectorYN> detector_2 = cv::FaceDetectorYN::create("./models/face_detection_yunet_2023mar.onnx", "", cv::Size(1920, 1080), 0.6f, 0.3f, 5000);
+    //cv::Ptr<cv::FaceDetectorYN> detector_2 = cv::FaceDetectorYN::create("./models/face_detection_yunet_2023mar.onnx", "", cv::Size(1920, 1080), 0.6f, 0.3f, 5000);
 
     if (config.bgType == "mp4") {
         background_Video.open("./backgrounds/"+config.bgName+".mp4");
@@ -98,7 +100,7 @@ int main() {
             background = background_SOURCE.clone();
         }
         
-        getLocationOfHead_res10(headData, camera, net);
+        getLocationOfHead(headData, camera, net);
         //getLocationOfHead_YuNet(headData, camera, detector);
         //getLocationOfHead_YuNet_2(headData, camera, detector_2);
         Smoothing(headData, 0.4, 0.5);
