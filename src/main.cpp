@@ -16,6 +16,8 @@ using namespace std::chrono;
 
 
 int main() {
+    cout << "Starting Dynamic Window TV..." << endl;
+
     /////////////       Make Variables      /////////////
     cv::Mat camera;
     cv::Mat background_SOURCE;
@@ -31,8 +33,8 @@ int main() {
 
     /////////////       Loading      /////////////
     cv::dnn::Net net = cv::dnn::readNetFromCaffe(
-        "../models/deploy.prototxt",
-        "../models/res10_300x300_ssd_iter_140000.caffemodel"
+        "./models/deploy.prototxt",
+        "./models/res10_300x300_ssd_iter_140000.caffemodel"
     );
 
     cv::VideoCapture video(0, cv::CAP_AVFOUNDATION);
@@ -43,7 +45,7 @@ int main() {
     //if (!video.isOpened()) return -1;
 
     if (config.bgType == "mp4") {
-        background_Video.open("../backgrounds/"+config.bgName+".mp4");
+        background_Video.open("./backgrounds/"+config.bgName+".mp4");
 
         if(!background_Video.isOpened()){
             std::cout << "Error opening video stream" << std::endl;
@@ -51,7 +53,7 @@ int main() {
         }
     }
     else {
-        background_SOURCE = cv::imread("../backgrounds/"+config.bgName+"."+config.bgType, cv::IMREAD_ANYDEPTH | cv::IMREAD_COLOR);
+        background_SOURCE = cv::imread("./backgrounds/"+config.bgName+"."+config.bgType, cv::IMREAD_ANYDEPTH | cv::IMREAD_COLOR);
         cv::Ptr<cv::TonemapReinhard> tonemap = cv::createTonemapReinhard(config.gamma_Day, 0.0f, 0.0f, 0.0f);
         tonemap->process(background_SOURCE, background_SOURCE);
         background_SOURCE.convertTo(background_SOURCE, CV_8UC3, 255.0);
@@ -68,9 +70,6 @@ int main() {
         currentTime = std::chrono::high_resolution_clock::now();
 
         video >> camera;
-
-        //video.read(camera);
-
         
         if (config.bgType == "mp4") {
             background_Video >> background;

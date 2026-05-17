@@ -52,7 +52,7 @@ void setCropping(Window& Window, int background_Y, int background_X, int CropSiz
 
 
 vector<vector<string>> catalogRead() {
-    ifstream catalog("../catalog.csv");
+    ifstream catalog("./catalog.csv");
 
     vector<vector<string>> data;
     string line;
